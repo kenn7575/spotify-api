@@ -1,9 +1,13 @@
 import * as querystring from 'querystring';
 
-import { CLIENT_ID, CLIENT_SECRET } from '$env/static/private';
+//local
+// import { CLIENT_ID, CLIENT_SECRET } from '$env/static/private';
+// const client_id = CLIENT_ID;
+// const client_secret = CLIENT_SECRET;
 
-const client_id = CLIENT_ID;
-const client_secret = CLIENT_SECRET;
+//vercel
+const client_id = process.env.CLIENT_ID;
+const client_secret = process.env.CLIENT_SECRET;
 
 export async function generateToken() {
 	try {

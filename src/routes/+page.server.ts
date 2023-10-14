@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 import { generateToken } from '$lib/server/admin';
-import type { Album, SpotifyData, Artist } from '$lib/index';
+import type { SpotifyData } from '$lib/index';
 const token = generateToken();
 
 export const load = (async () => {

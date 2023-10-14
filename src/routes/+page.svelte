@@ -1,8 +1,7 @@
 <script lang="ts">
-	import type { SpotifyData } from '$lib/index';
+	import type { SpotifyData } from '$lib/types';
 	export let data: SpotifyData;
 	import Album from '$lib/album.svelte';
-	console.log(data);
 </script>
 
 <div id="body">

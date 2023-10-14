@@ -1,30 +1,32 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { Album } from './index';
+	import type { Album } from '$lib/types';
 	export let albumData: Album;
-	import ColorThief from '../../node_modules/colorthief/dist/color-thief.mjs';
-	let color: string;
+	let color: string = '#fff';
+	import { getDominantColorFromImage } from '$lib/getDominantColor';
+
 	onMount(() => {
-		const colorThief = new ColorThief();
-
-		const img: HTMLImageElement | null = document.getElementById(
-			albumData.name.replaceAll(' ', '_')
-		);
-
-		if (!img) return;
-		// Make sure image is finished loading
-		if (img.complete) {
-			color = colorThief.getColor(img);
-		} else {
-			img.addEventListener('load', function () {
-				color = colorThief.getColor(img);
-			});
-		}
+		// Example usage
+		const imageElement: HTMLImageElement | null = document.querySelector('img');
+		if (!imageElement) return;
+		imageElement.onload = () => {
+			const dominantColor = getDominantColorFromImage(imageElement);
+			if (dominantColor) {
+				color = dominantColor;
+			} else {
+				console.log('Unable to get dominant color.');
+			}
+		};
 	});
 </script>
 
-<div style="background: {color};">
-	<img id={albumData.name.replaceAll(' ', '_')} src={albumData.images[0].url} alt="album-cover" />
+<div>
+	<img
+		style="background: {color.includes('#') ? color : '#' + color}"
+		id={albumData.name.replaceAll(' ', '_')}
+		src={albumData.images[0].url}
+		alt="album-cover"
+	/>
 </div>
 
 <style>
