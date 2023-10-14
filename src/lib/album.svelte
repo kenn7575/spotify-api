@@ -8,22 +8,34 @@
 
 	onMount(() => {
 		// Example usage
-		const imageElement: HTMLImageElement | null = document.querySelector('img');
-		if (!imageElement) return;
-		imageElement.onload = () => {
-			const dominantColor = getDominantColorFromImage(imageElement);
-			console.log(dominantColor);
-			if (dominantColor) {
-				color = dominantColor;
-			} else {
-				console.log('Unable to get dominant color.');
-			}
-		};
+		const imageElements: NodeListOf<HTMLImageElement> = document.querySelectorAll('img');
+		if (!imageElements) {
+			console.log('No image');
+			return;
+		}
+		imageElements.forEach((img) => {
+			img.onload = () => {
+				console.log('image loaded', albumData.name);
+				const dominantColor = getDominantColorFromImage(img);
+
+				if (dominantColor) {
+				} else {
+					console.log('Unable to get dominant color.');
+				}
+				const parrent: HTMLDivElement | any = img.parentElement;
+				if (!parrent || parrent.type != 'HTMLDivElement') {
+					console.log('no image inside div');
+					return;
+				}
+				parrent.style.background = dominantColor;
+			};
+		});
 	});
 </script>
 
-<div style="background: {color.includes('#') ? color : '#' + color}">
+<div class="image-container">
 	<img id={albumData.name.replaceAll(' ', '_')} src={albumData.images[0].url} alt="album-cover" />
+	<p>{albumData.name}</p>
 </div>
 
 <style>
@@ -37,5 +49,6 @@
 		align-items: center;
 		width: 100%;
 		height: 100%;
+		flex-direction: column;
 	}
 </style>
