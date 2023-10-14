@@ -12,6 +12,7 @@
 		if (!imageElement) return;
 		imageElement.onload = () => {
 			const dominantColor = getDominantColorFromImage(imageElement);
+			console.log(dominantColor);
 			if (dominantColor) {
 				color = dominantColor;
 			} else {
