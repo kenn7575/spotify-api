@@ -3,6 +3,7 @@
 	import type { Album } from '$lib/types';
 	export let albumData: Album;
 	let color: string = '#fff';
+	$: console.log(color);
 	import { getDominantColorFromImage } from '$lib/getDominantColor';
 
 	onMount(() => {
@@ -20,13 +21,8 @@
 	});
 </script>
 
-<div>
-	<img
-		style="background: {color.includes('#') ? color : '#' + color}"
-		id={albumData.name.replaceAll(' ', '_')}
-		src={albumData.images[0].url}
-		alt="album-cover"
-	/>
+<div style="background: {color.includes('#') ? color : '#' + color}">
+	<img id={albumData.name.replaceAll(' ', '_')} src={albumData.images[0].url} alt="album-cover" />
 </div>
 
 <style>
